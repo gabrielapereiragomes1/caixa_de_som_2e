@@ -1,18 +1,24 @@
-//criando/declarando a função tocaSomPom
-function tocaSomPom() {
-    document.querySelector('#som_tecla_pom').play();
+//criando/declarando a função tocaSom com parâmetro idElementoAudio
+function tocaSom(idElementoAudio){
+    document.querySelector(idElementoAudio).play();
 }
-//chamando/ivocando a função tocaSomPom
-document.querySelector('.som_tecla_pom').onclick = tocaSomPom;
-
-//criando a referência constante ListaDeTeclas
-const ListaDeTeclas = document.querySelectorAll('.tecla');
-
-//atribuindo o clique no botão "0" que é o 1º item da lista de teclas
-listaDeTeclas[0].onclick = tocaSomPom;
-//criando referência várivael contador,atribuindo o valor inicial com "0"
-let contador = 0;
-//Criando o código de repetição WHILE
-while() {
-
+//criando a referência constante listaDeTeclas
+const listaDeTeclas = document.querySelectorAll('.tecla');
+//Criando o código de repetição WHILE e mudando para FOR
+//enquanto o contador < comprimento da lista, tocará o som.
+for(let contador = 0;contador < listaDeTeclas.length;contador++){
+    const tecla = listaDeTeclas[contador];
+    const efeito = tecla.classList[1]; //chama a classe do indice 1 do som
+    const idAudio = `#som_${efeito}`; //junção com template string
+    tecla.onclick = function(){ //função anônima para tocaSom
+        tocaSom(idAudio);
+    }
+    tecla.onkeydown = function(evento){ //função para tecla pressionada
+        if(evento.code != 'Tab'){
+            tecla.classList.add('ativa');
+        }
+    } 
+    tecla.onkeyup = function(){ //função para tecla despressionada
+        tecla.classList.remove('ativa');
+    }
 }
